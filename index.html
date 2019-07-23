@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	
+		<title>AGC</title>
+		<meta name="author" content="Alexander DeRoberto, Antonio Di Tecco ">
+		<meta name="description" content="Apollo Guidance Computer - Emulator">
+		<meta name="keywords" content="Apollo,Guidance,Computer,AGC,Emulator,De Roberto, Di Tecco">
+		<meta charset="UTF-8" />
+		<style>
+		* {
+			padding: 0;
+			margin: 0;
+			outline: none;
+		}
+		
+		body {
+			padding: 25px;
+			font-size: 20px;
+			font-family: Arial, Sans-Serif;
+		}
+		
+		#agc {
+			background: #dfdfdf;
+			height: auto;
+			width: 500px;
+			border: 1px solid #808080;
+			padding: 20px;
+		}
+		
+		#top {
+			height: 400px;
+			text-transform: uppercase;
+		}
+		
+		#lamps {
+			height: 380px;
+			border: 5px solid #000;
+			width: 200px;
+		}
+		
+		#digits_fragment {
+			height: 380px;
+			border: 5px solid #000;
+			width: 200px;
+			background: #000;
+			color: #48f442;
+			font-size: 55px;
+			font-family: monospace; 
+		}
+		
+		.left {
+			float: left;
+		}
+		
+		.right {
+			float: right;
+		}
+		
+		.digits_bottom {
+			padding-top:60px
+		}
+		
+		.row {
+			height: 50px;
+			margin-bottom: 5px;
+			margin-top: 10px;
+			text-align: right
+		}
+		
+		#top .column {
+			width: 90px;
+			height: auto;
+		}
+		
+		#top .lamp {
+			width: 80px;
+			height: 40px;
+			background: #888;
+			color: #000;
+			text-transform: uppercase;
+			padding: 5px;
+			margin-bottom: 5px;
+			font-size: 15px;
+			text-align: center;
+		}
+		
+		#top .lamp span {
+			display: block;
+			margin-top: 10px;
+		}
+		
+		#top .lamp .inline{
+			display: inline;
+		}
+		
+		#lamps>.left .bright {
+			background: #ffffcc !important;
+			color: #4d4d00 !important
+		}
+		
+		#lamps>.right .bright {
+			background: #ffc34d !important;
+			color: #4d3300 !important
+		}
+		
+		#digits_fragment .column {
+			height: 110px;
+		}
+		
+		.disp_lamp {
+			width: 80px;
+			height: 40px;
+			/*background: #888;*/
+			color: #111;
+			text-transform: uppercase;
+			padding: 5px;
+			margin-bottom: 5px;
+			font-size: 15px;
+			text-align: center;
+		}
+		
+		.disp_lamp.bright {
+			background: #48f442 !important
+		}
+		
+		#disp_lamp_1 {
+			height: 65px;
+			margin-bottom: 5px
+		}
+		
+		.square {
+			height: 80px;
+			width: 90px
+		}
+		
+		.square>.digits {
+			text-align: center;
+			font-size: 55px;
+			margin-top: -10px
+		}
+		
+		#bottom {
+			height: 240px;
+			width: auto;
+			text-transform: uppercase;
+			padding: 0 30px;
+			border: 1px solid #000;
+		}
+		
+		#bottom .column {
+			margin-top: 30px;
+			width: 60px;
+			height: auto;
+			display: inline-block;
+		}
+		
+		#bottom .button {
+			width: 45px;
+			height: 45px;
+			background: #000;
+			color: #fff;
+			text-transform: uppercase;
+			padding: 5px;
+			margin: 0 2.5px;
+			margin-bottom: 5px;
+			font-size: 15px;
+			text-align: center;
+			font-weight: bold;
+		}
+		
+		#bottom .button span {
+			display: block;
+			margin-top: 14px;
+		}
+		
+		#bottom .button .inline{
+			margin-top: 5px;
+		}
+		
+		.first,.last {
+			padding-top: 28px;
+		}
+		
+		.first {
+			margin-left: 8px;
+		}
+		
+		.title_lamp {
+			height: 20px;
+			font-size: 18px;
+			text-align: center
+		}
+		</style>	
+	
+	</head>
+	<body>
+	
+		<div id="agc">
+		
+			<div id="top">
+				
+				<div id="lamps" class="left">
+					
+					<div class="column left">
+						<div id="lamp_1" class="lamp"><span class="inline">UPLINK ACTY</span></div>
+						<div id="lamp_2" class="lamp"><span>NO ATT</span></div>
+						<div id="lamp_3" class="lamp"><span>STBY</span></div>
+						<div id="lamp_4" class="lamp"><span>KEY REL</span></div>
+						<div id="lamp_5" class="lamp bright"><span>OPR ERR</span></div>
+						<div id="lamp_6" class="lamp"><span>LOCK</span></div>
+						<div id="lamp_7" class="lamp"></div>
+					</div>
+					<div class="column right">
+						<div id="lamp_8" class="lamp"><span>TEMP</span></div>
+						<div id="lamp_9" class="lamp"><span class="inline">GIMBALL LOCK</span></div>
+						<div id="lamp_10" class="lamp bright"><span>PROG</span></div>
+						<div id="lamp_11" class="lamp"><span>RESTART</span></div>
+						<div id="lamp_12" class="lamp"><span>TRACKER</span></div>
+						<div id="lamp_13" class="lamp"><span>ALT</span></div>
+						<div id="lamp_14" class="lamp"><span>VEL</span></div>
+					</div>
+					
+				</div>
+				
+				<div id="digits_fragment" class="right">
+					
+					<div class="column left">
+						<div id="disp_lamp_1" class="disp_lamp bright"><span style="display: block;margin-top:10px">COMP ACTY</span></div>
+						<div id="verb" class="square">
+							<div id="disp_lamp_2" class="title_lamp disp_lamp bright">Verb</div>
+							<div id="digits_2" class="digits">##</div>
+						</div>
+					</div>
+					<div class="column right">
+						<div id="prog" class="square">
+							<div id="disp_lamp_3" class="title_lamp disp_lamp bright">Prog</div>
+							<div id="digits_1" class="digits">##</div>
+						</div>
+						<div id="noun" class="square">
+							<div id="disp_lamp_4" class="title_lamp disp_lamp bright">Noun</div>
+							<div id="digits_3" class="digits">##</div>
+						</div>
+					</div>
+					<br style="clear: both" />
+					<div class="digits_bottom">
+						<div id="digits_4" class="row">-12345</div>
+						<div id="digits_5" class="row">#####</div>
+						<div id="digits_6" class="row">+#####</div>
+					</div>
+				</div>
+				
+			</div>
+			<div id="bottom">
+				
+				<div class="column first left">
+					<div class="button" onclick="keyPress('v')"><span>VERB</span></div>
+					<div class="button" onclick="keyPress('n')"><span>NOUN</span></div>				
+				</div>
+				
+				<div class="column left">
+					<div class="button" onclick="keyPress('a')"><span>+</span></div>
+					<div class="button" onclick="keyPress('s')"><span>-</span></div>		
+					<div class="button" onclick="keyPress('0')"><span>0</span></div>									
+				</div>
+				
+				<div class="column left">
+					<div class="button" onclick="keyPress('7')"><span>7</span></div>
+					<div class="button" onclick="keyPress('4')"><span>4</span></div>		
+					<div class="button" onclick="keyPress('1')"><span>1</span></div>									
+				</div>
+				
+				<div class="column left">
+					<div class="button" onclick="keyPress('8')"><span>8</span></div>
+					<div class="button" onclick="keyPress('5')"><span>5</span></div>		
+					<div class="button" onclick="keyPress('2')"><span>2</span></div>									
+				</div>
+				
+				<div class="column left">
+					<div class="button" onclick="keyPress('9')"><span>9</span></div>
+					<div class="button" onclick="keyPress('6')"><span>6</span></div>		
+					<div class="button" onclick="keyPress('3')"><span>3</span></div>									
+				</div>
+				
+				<div class="column left">
+					<div class="button" onclick="keyPress('c')"><span>CLR</span></div>
+					<div id="key_pro" class="button"><span>PRO</span></div>		
+					<div class="button" onclick="keyPress('k')"><span class="inline">KEY REL</span></div>									
+				</div>
+				
+				<div class="column last left">
+					<div class="button" onclick="keyPress('e')"><span>ENTR</span></div> <!--V35n11e-->
+					<div class="button" onclick="keyPress('r')"><span>RSET</span></div>		
+				</div>
+				
+			</div>
+		
+		</div>
+		
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript">
+	function ajax(url, data, success, error){
+		var request=$.ajax({
+			url: url,
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			method: 'GET',
+			dataType: 'json',
+		});
+		request.done(function(response){
+			success(response);
+		});
+		request.fail(function(jqXHR, textStatus){
+			if(error){
+				error();
+			}
+			else{
+				console.log("Errore ajax");
+				console.log(textStatus);
+			}
+		});
+	};
+	
+	$("#key_pro")
+	.mousedown(function(){
+		ajax('./button/p', null, function(data){
+			if(data.success == 1){console.log(data.message);}
+			else{console.log("PRO key releas ERROR");}
+		}, null);
+	})
+	.mouseup(function(){
+		ajax('./button/z', null, function(data){
+			if(data.success == 1){console.log(data.message);}
+			else{console.log("PRO key press ERROR");}
+		}, null);
+	});
+	//TODO: aggiungere l'evento di quando il mouse si sposta dal bottone
+	
+	var statusInterval;
+	
+	$(function() {
+		window.statusInterval = setInterval(getStatus, 40);
+	});
+	
+	function getStatus() {
+		ajax('./status', null, function(data){
+			if(data.success == 1){
+				refresh(data);
+			}
+			else{
+				console.log("DSKY status ERROR");
+			}
+		}, function(){
+			console.log("AGC is down!");
+			disconnect();
+		});
+	}
+	
+	function refresh(data){
+		$.each(data.lamps, function(i, item){
+			if(item.value){
+				$("#"+item.id).addClass("bright");
+			}
+			else{
+				$("#"+item.id).removeClass("bright");
+			}
+		});
+		
+		$.each(data.digits, function(i, item){
+			$("#"+item.id).text(item.value);
+		});
+	}
+	
+	function disconnect(){
+		clearInterval(window.statusInterval);
+		console.log("Disconnected from AGC.");
+	}
+	
+	function keyPress(m){
+		ajax('./button/'+m, null, function(data){
+			if(data.success == 1){console.log(data.message);}
+			else{console.log("Input ERROR");}
+		}, null);
+	}	
+		</script>
+	</body>
+</html>
