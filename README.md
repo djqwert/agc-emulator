@@ -1,6 +1,8 @@
 # AGC emulator
 This project presents an Emulator of Apollo Guidance Computer reference to this [MIT](http://ibiblio.org/apollo/NARA-SW/E-2052.pdf) document.
 
+It's possible use an [AGC assembler](https://github.com/djqwert/agc-assembler) to assembly easily the code.
+
 Features:
   - AGC
     - CPU
