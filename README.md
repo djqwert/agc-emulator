@@ -29,4 +29,4 @@ To execute project:
 
 # Contributors
 [Antonio Di Tecco](https://github.com/djqwert)<br>
-[Alexander DeRoberto](https://github.com/#/)
+[Alexander De Roberto](https://github.com/alexanderderoberto/)
