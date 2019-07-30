@@ -1,5 +1,5 @@
 # AGC emulator
-This project presents an Emulator of Apollo Guidance Computer.
+This project presents an Emulator of Apollo Guidance Computer reference to this [MIT](http://ibiblio.org/apollo/NARA-SW/E-2052.pdf) document.
 
 Features:
   - AGC
@@ -29,4 +29,4 @@ To execute project:
 
 # Contributors
 [Antonio Di Tecco](https://github.com/djqwert)<br>
-[Alexander De Roberto](https://github.com/alexanderderoberto/)
+[Alexander De Roberto](https://github.com/alexanderderoberto)
